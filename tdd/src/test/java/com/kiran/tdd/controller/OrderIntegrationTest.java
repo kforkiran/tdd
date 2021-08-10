@@ -1,7 +1,6 @@
 package com.kiran.tdd.controller;
 
 import com.kiran.tdd.dto.Order;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ExtendWith(SpringExtension.class)
-public class OrderIntegrationTest {
+class OrderIntegrationTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
@@ -25,5 +24,8 @@ public class OrderIntegrationTest {
     void getOrderDetails_returns200AndDetails() {
         ResponseEntity<Order> orderResponseEntity = testRestTemplate.getForEntity("/orders/99", Order.class);
         assertThat(orderResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(orderResponseEntity.getBody().getCustomerEmail()).isEqualTo("pawar_kiran@live.in");
+        assertThat(orderResponseEntity.getBody().getCustomerAddress()).isEqualTo("Pune");
+        assertThat(orderResponseEntity.getBody().getId()).isEqualTo(9);
     }
 }
