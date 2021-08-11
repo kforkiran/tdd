@@ -1,4 +1,4 @@
-package com.kiran.tdd.controller;
+package com.kiran.tdd.integrationtest;
 
 import com.kiran.tdd.dto.Order;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class OrderIntegrationTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    void getOrderDetails_returns200AndDetails() {
+    void getOrder_returnsOrderDetails() {
         ResponseEntity<Order> orderResponseEntity = testRestTemplate.getForEntity("/orders/99", Order.class);
         assertThat(orderResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(orderResponseEntity.getBody().getCustomerEmail()).isEqualTo("pawar_kiran@live.in");

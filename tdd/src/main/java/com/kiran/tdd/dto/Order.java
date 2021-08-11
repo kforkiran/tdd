@@ -2,9 +2,18 @@ package com.kiran.tdd.dto;
 
 public class Order {
 
+    private Long id;
     private String customerEmail;
     private String customerAddress;
-    private Long id;
+
+    public Order() {
+    }
+
+    public Order(Long id, String customerEmail, String customerAddress) {
+        this.id = id;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+    }
 
     public String getCustomerEmail() {
         return customerEmail;
