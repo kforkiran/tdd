@@ -1,6 +1,7 @@
 package com.kiran.tdd.controller;
 
 import com.kiran.tdd.dto.Order;
+import com.kiran.tdd.exceptions.OrderNotFoundException;
 import com.kiran.tdd.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,8 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(OrderController.class)
 @ExtendWith(SpringExtension.class)
@@ -32,5 +32,11 @@ class OrderControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/orders/99"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("customerEmail").value("pawar_kiran@live.in"));
+    }
+
+    @Test
+    void getCar_notFoundException() throws Exception {
+        given(orderService.getOrder(anyLong())).willThrow(new OrderNotFoundException());
+        mockMvc.perform(MockMvcRequestBuilders.get("/orders/99")).andExpect(status().isNotFound());
     }
 }
