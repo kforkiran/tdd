@@ -1,6 +1,7 @@
 package com.kiran.tdd.service;
 
 import com.kiran.tdd.dto.Order;
+import com.kiran.tdd.entities.OrderEntity;
 import com.kiran.tdd.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +25,8 @@ class OrderServiceTest {
 
     @Test
     void getOrderDetails_shouldReturn_OrderDetails() {
-        Order order = new Order(1l, "pawar_kiran@live.in", "asdsf");
-        given(orderRepository.findById(1l)).willReturn(Optional.of(order));
+        OrderEntity orderEntity = new OrderEntity(1l, "pawar_kiran@live.in", "asdsf");
+        given(orderRepository.findById(1l)).willReturn(Optional.of(orderEntity));
         Order orderResponse = orderService.getOrder(1l);
         assertThat(orderResponse.getCustomerEmail()).isEqualTo("pawar_kiran@live.in");
     }
