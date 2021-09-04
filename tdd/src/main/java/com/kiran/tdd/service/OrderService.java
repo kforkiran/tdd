@@ -16,4 +16,8 @@ public class OrderService {
                 .map(order -> new Order(order.getId(), order.getCustomerEmail(), order.getCustomerAddress()))
                 .orElseThrow(RuntimeException::new);
     }
+
+    public Order createOrder(Order order) {
+        return null;
+    }
 }
