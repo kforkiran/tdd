@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.any;
 
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
@@ -34,10 +35,11 @@ class OrderServiceTest {
                 .quantity(9)
                 .build();
 
-        orderEntity.builder()
+        orderEntity = orderEntity.builder()
                 .customerEmail("pawar_kiran@live.in")
                 .customerAddress("Pune")
-                .lineItems(List.of(pens));
+                .lineItems(List.of(pens))
+                .build();
     }
 
     @Test
@@ -45,5 +47,16 @@ class OrderServiceTest {
         given(orderRepository.findById(1l)).willReturn(Optional.of(orderEntity));
         Order orderResponse = orderService.getOrder(1l);
         assertThat(orderResponse.getCustomerEmail()).isEqualTo("pawar_kiran@live.in");
+    }
+
+    @Test
+    void createOrder() {
+        given(orderRepository.save(any(OrderEntity.class))).willReturn(orderEntity);
+        final Order order = Order.builder()
+                .customerEmail("pawar_kiran@live.in")
+                .customerAddress("Pune")
+                .build();
+        final Order newOrder = orderService.createOrder(order);
+        assertThat(newOrder.getCustomerEmail()).isEqualTo("pawar_kiran@live.in");
     }
 }
